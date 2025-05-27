@@ -1,69 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TweetGlimpse</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TweetGlimpse - Transform Tweets into Stunning Visuals</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .tweet-card {
+            transition: all 0.3s ease;
+        }
+        .tweet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .frame-light {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid #e9ecef;
+        }
+        .frame-dark {
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            color: white;
+        }
+        .frame-vibrant {
+            background: linear-gradient(145deg, #ff6b6b, #4ecdc4);
+            color: white;
+        }
+        .frame-minimal {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border: 1px solid #dee2e6;
+        }
+        .frame-premium {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
 </head>
-<body>
-  <!-- Header Section -->
-  <header class="header">
-    <img src="/images/logo.png" alt="TweetGlimpse Logo" class="logo" />
-    <h1>Transform Your Tweets into Stunning Images</h1>
-    <p>Share your thoughts with style. Choose a frame and make your tweet stand out.</p>
-    <a href="#generate" class="cta-button">Get Started</a>
-  </header>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            <i class="fas fa-camera text-purple-600 mr-2"></i>
+                            TweetGlimpse
+                        </h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#features" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">Features</a>
+                        <a href="#examples" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">Examples</a>
+                        <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">How it Works</a>
+                    </div>
+                </div>
+                <button class="btn-primary text-white px-6 py-2 rounded-full text-sm font-medium">
+                    Get Started Free
+                </button>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Features Section -->
-  <section class="features">
-    <div class="feature">
-      <h2>Minimalistic Design</h2>
-      <p>Choose from a variety of clean and elegant frames to highlight your tweet.</p>
-    </div>
-    <div class="feature">
-      <h2>Easy to Use</h2>
-      <p>Simply paste your tweet URL, select a frame, and download your image.</p>
-    </div>
-    <div class="feature">
-      <h2>High-Quality Output</h2>
-      <p>Download high-resolution images suitable for sharing across platforms.</p>
-    </div>
-  </section>
+    <!-- Hero Section with Conversion Tool -->
+    <section class="relative overflow-hidden bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+                    Transform Your <span class="text-transparent bg-clip-text gradient-bg">Tweets</span><br>
+                    into Stunning Visuals
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Convert any tweet into beautiful, shareable images with premium frames. Perfect for Instagram, LinkedIn, presentations, and more.
+                </p>
+            </div>
 
-  <!-- Generate Section -->
-  <section id="generate" class="generate">
-    <h2>Create Your Tweet Image</h2>
-    <form id="tweetForm">
-      <input type="url" id="tweetUrl" placeholder="Enter Tweet URL" required />
-      <select id="frameStyle">
-        <option value="classic">Classic Frame</option>
-        <option value="dark">Dark Frame</option>
-        <option value="vibrant">Vibrant Frame</option>
-      </select>
-      <button type="submit">Generate Image</button>
-    </form>
-    <div id="preview" class="preview">
-      <!-- Preview will be displayed here -->
-    </div>
-  </section>
+            <!-- Conversion Tool -->
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 mb-16">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6 text-center">
+                    <i class="fas fa-magic text-purple-600 mr-2"></i>
+                    Try it Now - Paste Any Tweet URL
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Input Section -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tweet URL</label>
+                        <input type="url" id="tweetUrl" placeholder="https://twitter.com/username/status/..." 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        
+                        <label class="block text-sm font-medium text-gray-700 mb-2 mt-4">Choose Frame Style</label>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <button onclick="selectFrame('light')" class="frame-selector p-3 rounded-lg border-2 frame-light text-center text-sm font-medium">
+                                Light
+                            </button>
+                            <button onclick="selectFrame('dark')" class="frame-selector p-3 rounded-lg border-2 frame-dark text-center text-sm font-medium">
+                                Dark
+                            </button>
+                            <button onclick="selectFrame('vibrant')" class="frame-selector p-3 rounded-lg border-2 frame-vibrant text-center text-sm font-medium">
+                                Vibrant
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-6">
+                            <button onclick="selectFrame('minimal')" class="frame-selector p-3 rounded-lg border-2 frame-minimal text-center text-sm font-medium">
+                                Minimal
+                            </button>
+                            <button onclick="selectFrame('premium')" class="frame-selector p-3 rounded-lg border-2 frame-premium text-center text-sm font-medium">
+                                Premium
+                            </button>
+                        </div>
+                        
+                        <button onclick="generatePreview()" class="w-full btn-primary text-white py-3 rounded-lg font-medium mb-3">
+                            <i class="fas fa-wand-magic-sparkles mr-2"></i>
+                            Generate Preview
+                        </button>
+                        <button onclick="downloadImage()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium">
+                            <i class="fas fa-download mr-2"></i>
+                            Download Image
+                        </button>
+                    </div>
 
-  <!-- Examples Section -->
-  <section class="examples">
-    <h2>Popular TweetGlimpses</h2>
-    <div class="example-images">
-      <img src="/images/example1.png" alt="Example 1" />
-      <img src="/images/example2.png" alt="Example 2" />
-      <img src="/images/example3.png" alt="Example 3" />
-    </div>
-  </section>
+                    <!-- Preview Section -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Live Preview</label>
+                        <div id="preview" class="w-full bg-gray-100 rounded-lg p-6 min-h-64 flex items-center justify-center border-2 border-dashed border-gray-300">
+                            <div class="text-center text-gray-500">
+                                <i class="fas fa-image text-4xl mb-2"></i>
+                                <p>Your tweet preview will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer Section -->
-  <footer class="footer">
-    <p>&copy; 2025 TweetGlimpse. All rights reserved.</p>
-  </footer>
+    <!-- Popular Examples Section -->
+    <section id="examples" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    See TweetGlimpse in Action
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Check out these transformed tweets from popular accounts
+                </p>
+            </div>
 
-  <script src="script.js"></script>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Example 1 - Light Frame -->
+                <div class="tweet-card bg-white rounded-2xl p-6 shadow-lg floating-animation">
+                    <div class="frame-light rounded-xl p-4 mb-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                E
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-semibold text-gray-900">Elon Musk</div>
+                                <div class="text-gray-600 text-sm">@elonmusk</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 text-lg leading-relaxed">
+                            "The best part about being an entrepreneur is that every day is different. Yesterday's impossible is today's breakthrough."
+                        </p>
+                        <div class="flex items-center mt-4 text-gray-500 text-sm">
+                            <i class="far fa-heart mr-4"></i>
+                            <i class="fas fa-retweet mr-4"></i>
+                            <i class="far fa-comment"></i>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 text-sm">Light Frame Style</p>
+                </div>
+
+                <!-- Example 2 - Dark Frame -->
+                <div class="tweet-card bg-white rounded-2xl p-6 shadow-lg floating-animation" style="animation-delay: 1s;">
+                    <div class="frame-dark rounded-xl p-4 mb-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                S
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-semibold text-white">Startup Quote</div>
+                                <div class="text-gray-300 text-sm">@startupquote</div>
+                            </div>
+                        </div>
+                        <p class="text-white text-lg leading-relaxed">
+                            "Your limitation—it's only your imagination. Great things never come from comfort zones."
+                        </p>
+                        <div class="flex items-center mt-4 text-gray-400 text-sm">
+                            <i class="far fa-heart mr-4"></i>
+                            <i class="fas fa-retweet mr-4"></i>
+                            <i class="far fa-comment"></i>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 text-sm">Dark Frame Style</p>
+                </div>
+
+                <!-- Example 3 - Vibrant Frame -->
+                <div class="tweet-card bg-white rounded-2xl p-6 shadow-lg floating-animation" style="animation-delay: 2s;">
+                    <div class="frame-vibrant rounded-xl p-4 mb-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-purple-600 font-bold">
+                                M
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-semibold text-white">Marketing Pro</div>
+                                <div class="text-gray-200 text-sm">@marketingpro</div>
+                            </div>
+                        </div>
+                        <p class="text-white text-lg leading-relaxed">
+                            "Content is fire, social media is gasoline. 🔥 Create content that sparks conversations and builds communities."
+                        </p>
+                        <div class="flex items-center mt-4 text-gray-200 text-sm">
+                            <i class="far fa-heart mr-4"></i>
+                            <i class="fas fa-retweet mr-4"></i>
+                            <i class="far fa-comment"></i>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 text-sm">Vibrant Frame Style</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="btn-primary text-white px-8 py-3 rounded-full text-lg font-medium">
+                    <i class="fas fa-arrow-up mr-2"></i>
+                    Try It With Your Tweet
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    How TweetGlimpse Works
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Transform any tweet into a beautiful image in just 3 simple steps
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-link text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">1. Paste Tweet URL</h3>
+                    <p class="text-gray-600">Copy and paste any public tweet URL into our converter</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-palette text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">2. Choose Style</h3>
+                    <p class="text-gray-600">Select from our collection of beautiful, professional frame designs</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-download text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">3. Download & Share</h3>
+                    <p class="text-gray-600">Get your high-quality image ready for social media, presentations, and more</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Why Choose TweetGlimpse?
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <i class="fas fa-bolt text-purple-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Lightning Fast</h3>
+                    <p class="text-gray-600">Generate images in seconds, no waiting around</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <i class="fas fa-mobile-alt text-purple-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Mobile Optimized</h3>
+                    <p class="text-gray-600">Perfect results on desktop, tablet, and mobile</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <i class="fas fa-user-slash text-purple-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">No Registration</h3>
+                    <p class="text-gray-600">Start using immediately, no account required</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <i class="fas fa-crown text-purple-600 text-3xl mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Premium Quality</h3>
+                    <p class="text-gray-600">High-resolution images perfect for any platform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-camera text-purple-400 mr-2"></i>
+                    TweetGlimpse
+                </h3>
+                <p class="text-gray-400 mb-6 max-w-md mx-auto">
+                    Transform your tweets into stunning visuals that captivate and engage your audience.
+                </p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">
+                        © 2024 TweetGlimpse. All rights reserved. | Privacy Policy | Terms of Service
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedFrame = 'light';
+
+        function selectFrame(frameType) {
+            selectedFrame = frameType;
+            
+            // Update button states
+            document.querySelectorAll('.frame-selector').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-purple-500');
+            });
+            event.target.classList.add('ring-2', 'ring-purple-500');
+        }
+
+        function generatePreview() {
+            const tweetUrl = document.getElementById('tweetUrl').value;
+            const preview = document.getElementById('preview');
+            
+            if (!tweetUrl) {
+                alert('Please enter a tweet URL');
+                return;
+            }
+
+            // Simulate tweet content (in real implementation, you'd fetch actual tweet data)
+            const mockTweet = {
+                author: 'Sample User',
+                handle: '@sampleuser',
+                content: 'This is a sample tweet that shows how your tweet will look in the selected frame style. TweetGlimpse makes tweets beautiful! 🚀',
+                avatar: 'SU'
+            };
+
+            const frameClasses = {
+                light: 'frame-light',
+                dark: 'frame-dark',
+                vibrant: 'frame-vibrant',
+                minimal: 'frame-minimal',
+                premium: 'frame-premium'
+            };
+
+            preview.innerHTML = `
+                <div class="${frameClasses[selectedFrame]} rounded-xl p-6 w-full max-w-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            ${mockTweet.avatar}
+                        </div>
+                        <div class="ml-3">
+                            <div class="font-semibold">${mockTweet.author}</div>
+                            <div class="text-sm opacity-75">${mockTweet.handle}</div>
+                        </div>
+                    </div>
+                    <p class="text-lg leading-relaxed mb-4">
+                        ${mockTweet.content}
+                    </p>
+                    <div class="flex items-center text-sm opacity-75">
+                        <i class="far fa-heart mr-4"></i>
+                        <i class="fas fa-retweet mr-4"></i>
+                        <i class="far fa-comment"></i>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadImage() {
+            const preview = document.getElementById('preview');
+            if (preview.querySelector('.frame-light, .frame-dark, .frame-vibrant, .frame-minimal, .frame-premium')) {
+                // In a real implementation, you'd convert the preview to an image and download it
+                alert('Image generation complete! In a real implementation, this would download your tweet image.');
+            } else {
+                alert('Please generate a preview first');
+            }
+        }
+
+        // Initialize with light frame selected
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.frame-selector').classList.add('ring-2', 'ring-purple-500');
+        });
+    </script>
 </body>
 </html>
